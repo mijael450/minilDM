@@ -47,5 +47,3 @@ openssl x509 -in "$OUT_CERT" -noout -text | grep -A2 "Subject Alternative Name"
 
 echo ""
 echo "[OK] Certificado firmado: $OUT_CERT"
-echo "Siguiente paso: copiar de vuelta al servidor destino junto con la CA publica, ej:"
-echo "  scp $OUT_CERT $CA_CERT kali@192.168.100.9:/tmp/"

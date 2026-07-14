@@ -62,11 +62,9 @@ sudo openssl req -new -key "$KEY_FILE" \
   -out "$CSR_FILE" \
   -config "$SAN_CONF"
 
-echo "[*] Copiando el "
  
 echo "[OK] CSR generado en: $CSR_FILE"
-echo "     Llave privada (NO transferir):   $KEY_FILE"
+echo "     Llave privada:   $KEY_FILE"
 echo ""
-echo "Siguiente paso: copiar el CSR a VM1 (CA) para firmarlo, ej:"
-echo "  scp $CSR_FILE kali@192.168.100.6:/tmp/${SHORT_NAME}.csr.pem"
+
  
