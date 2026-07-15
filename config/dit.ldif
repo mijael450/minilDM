@@ -1,0 +1,91 @@
+# dit.ldif
+# Estructura del DIT para la FIS: dc=fis,dc=epn,dc=ec
+
+
+# --- Unidad organizativa raiz de personas ---
+dn: ou=people,dc=fis,dc=epn,dc=ec
+objectClass: organizationalUnit
+ou: people
+
+dn: ou=profesores,ou=people,dc=fis,dc=epn,dc=ec
+objectClass: organizationalUnit
+ou: profesores
+
+dn: ou=estudiantes,ou=people,dc=fis,dc=epn,dc=ec
+objectClass: organizationalUnit
+ou: estudiantes
+
+dn: ou=empleados,ou=people,dc=fis,dc=epn,dc=ec
+objectClass: organizationalUnit
+ou: empleados
+
+# --- Unidad organizativa de grupos ---
+dn: ou=groups,dc=fis,dc=epn,dc=ec
+objectClass: organizationalUnit
+ou: groups
+
+dn: cn=profesores,ou=groups,dc=fis,dc=epn,dc=ec
+objectClass: posixGroup
+cn: profesores
+gidNumber: 5000
+
+dn: cn=estudiantes,ou=groups,dc=fis,dc=epn,dc=ec
+objectClass: posixGroup
+cn: estudiantes
+gidNumber: 6000
+
+dn: cn=empleados,ou=groups,dc=fis,dc=epn,dc=ec
+objectClass: posixGroup
+cn: empleados
+gidNumber: 7000
+
+# --- Usuarios de ejemplo  ---
+
+dn: uid=malvan,ou=profesores,ou=people,dc=fis,dc=epn,dc=ec
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: malvan
+sn: Alvarado
+givenName: Marco
+cn: Marco Alvarado
+displayName: malvan
+uidNumber: 10001
+gidNumber: 5000
+mail: malvan@epn.ec
+loginShell: /bin/bash
+homeDirectory: /home/malvan
+userPassword: malvan2026
+
+dn: uid=jperez,ou=estudiantes,ou=people,dc=fis,dc=epn,dc=ec
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: jperez
+sn: Perez
+givenName: Juan
+cn: Juan Perez
+displayName: jperez
+uidNumber: 20001
+gidNumber: 6000
+mail: jperez@epn.ec
+loginShell: /bin/bash
+homeDirectory: /home/jperez
+userPassword: jperez2026
+
+dn: uid=dnoboa,ou=empleados,ou=people,dc=fis,dc=epn,dc=ec
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: dnoboa
+sn: Noboa
+givenName: Diego
+cn: Diego Noboa
+displayName: dnoboa
+uidNumber: 30001
+gidNumber: 7000
+mail: dnoboa@epn.ec
+loginShell: /bin/bash
+homeDirectory: /home/dnoboa
+userPassword: dnoboa2026
+
