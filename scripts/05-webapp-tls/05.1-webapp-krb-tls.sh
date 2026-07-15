@@ -53,7 +53,7 @@ sudo tee /etc/apache2/sites-available/fis-webapp.conf > /dev/null <<EOF
     SSLCertificateFile      ${SERVER_CERT}
     SSLCertificateKeyFile   ${SERVER_KEY}
     SSLCACertificateFile    ${CA_CERT}
- 
+    LogLevel auth_gssapi:trace8
     <Directory /var/www/fis-webapp>
         AuthType GSSAPI
         AuthName "FIS Kerberos Login"

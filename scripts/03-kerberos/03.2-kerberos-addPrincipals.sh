@@ -43,7 +43,7 @@ sudo chmod 640 /etc/ldap/keytab/core1.keytab
  
 # Keytab para los servicios de core2 (HTTP)
 sudo mkdir -p /tmp/keytabs
-sudo kadmin.local -q "ktadd -k /tmp/keytabs/core2.keytab http/core2.fis.epn.ec host/core2.fis.epn.ec"
+sudo kadmin.local -q "ktadd -k /tmp/keytabs/core2.keytab HTTP/core2.fis.epn.ec host/core2.fis.epn.ec"
  
 echo ""
 echo "[OK] Principals y keytabs creados."
