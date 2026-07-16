@@ -1,0 +1,3 @@
+timestamp,servicio,pid_matado,downtime_segundos,recuperado
+2026-07-15T23:32:30-04:00,slapd,.112649513
+2026-07-15T23:34:21-04:00,slapd,10617,.124172486,si
