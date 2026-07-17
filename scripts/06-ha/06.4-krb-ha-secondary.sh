@@ -57,4 +57,4 @@ sudo systemctl status kpropd --no-pager | head -5
 echo ""
 echo "[OK] VM2 (secundario) listo para recibir propagacion."
 echo "Siguiente paso: en VM1, generar el keytab de host/core2 y ejecutar"
-echo "07.2-kerberos-ha-propagate.sh para enviar la base de datos."
+echo "06.5-kerberos-ha-propagate.sh para enviar la base de datos."

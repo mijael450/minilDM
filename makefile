@@ -1,8 +1,8 @@
-# Makefile - FIS MiniIdM
-# Envoltorio de conveniencia sobre los scripts de scripts/.
-# IMPORTANTE: cada target debe correrse en la VM que le corresponde
-# (indicado entre parentesis). Este Makefile no ejecuta nada remoto;
-# solo simplifica el comando local en la maquina donde lo invoques.
+# Makefile del proyecto
+
+# IMPORTANTE: cada script tiene que  correrse en la VM que le corresponde
+#
+# Este makefile es una ayuda para ejecutar de mejor manera los scripts .
 
 SHELL := /bin/bash
 

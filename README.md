@@ -1,7 +1,6 @@
-# Infraestructura de Identidad Segura para la FIS (MiniIdM)
+# MiniIdM
 
-Proyecto de Computación Distribuida — Autenticación Kerberos, PKI, Servicios
-de Directorio LDAP y Alta Disponibilidad en Linux.
+
 
 ## Objetivo
 
@@ -9,7 +8,7 @@ Diseñar, implementar y evaluar una infraestructura segura de autenticación y
 servicios de directorio para la FIS, integrando:
 
 1. Autenticación Kerberos (MIT Kerberos)
-2. Infraestructura de Llave Pública (PKI) con OpenSSL (ECDSA)
+2. Infraestructura de Llave Pública (PKI) con OpenSSL
 3. Servicios de Directorio LDAP (OpenLDAP)
 4. Alta Disponibilidad (replicación LDAP, KDC secundario, balanceo de carga)
 
@@ -62,15 +61,14 @@ Base DN LDAP: `dc=fis,dc=epn,dc=ec`
 
 ## Prerrequisitos
 
-- 3 VMs con Kali Linux (o Debian/Ubuntu), conectadas en la misma red.
+- 3 VMs Debian/Ubuntu o cualquier otra distribucion basada en debian, conectadas en la misma red.
 - Acceso `sudo` en las 3 máquinas.
-- `/etc/hosts` configurado en las 3 VMs con las IPs de la tabla anterior.
-- Reloj sincronizado (`systemd-timesyncd`) — requisito estricto de Kerberos.
 
-## Guía de despliegue, por punto del PDF
+
+## Guía de despliegue
 
 ### 1. Servicio de Directorio LDAP (VM1)
-Instala OpenLDAP con Base DN `dc=fis,dc=epn,dc=ec`, TLS habilitado, y
+Instalar OpenLDAP con Base DN `dc=fis,dc=epn,dc=ec`, TLS habilitado, y
 carga el DIT (`ou=people` con sub-OUs `profesores`/`estudiantes`/`empleados`,
 más `ou=groups`).
 
@@ -79,13 +77,13 @@ bash scripts/02-ldap/02.1-ldap-install-master.sh
 ldapadd -x -D cn=admin,dc=fis,dc=epn,dc=ec -W -f config/dit.ldif
 ```
 
-Verificación (la misma que exige el PDF):
+Verificación:
 ```bash
 openssl s_client -connect core1.fis.epn.ec:636 -CAfile /etc/ssl/fis-ca/certs/ca.cert.pem
 ```
 
-### 2. Infraestructura de Llave Pública (VM1 + VM2)
-CA raíz con ECDSA (curva prime256v1), certificados con SAN emitidos para
+### 2. Infraestructura de Llave Pública 
+CA raíz con ECDSA (curva prime256v1), certificados emitidos para
 cada servidor.
 
 ```bash
@@ -105,14 +103,10 @@ bash scripts/03-kerberos/03.1-kerberos-install.sh
 bash scripts/03-kerberos/03.2-kerberos-addPrincipals.sh
 ```
 
-> **Nota (RFC 4559):** el principal de servicio HTTP debe llamarse
-> `HTTP/core2.fis.epn.ec` en **mayúsculas** — es el nombre que negocian
-> los navegadores/curl automáticamente vía SPNEGO. El ejemplo en
-> minúsculas del PDF es solo ilustrativo para otros servicios.
+> 
 
 ### 4. Integración LDAP-Kerberos (VM1)
-En vez de migrar el KDC a backend LDAP (cambio de arquitectura mayor y
-fuera de alcance), se implementó **sincronización activa**: un script
+**sincronización activa**: un script
 compara los `uid` de LDAP contra los principals de Kerberos, crea los
 que falten y reporta huérfanos.
 
@@ -155,14 +149,6 @@ bash scripts/06-ha/06.4-krb-ha-secondary.sh    # VM2
 bash scripts/06-ha/06.5-krb-ha-prpagate.sh     # VM1
 ```
 
-> **Nota importante:** `kprop`/`kpropd` construyen el principal de
-> autenticación (`host/<hostname>`) a partir del **hostname real** del
-> sistema operativo, no de alias en `/etc/hosts`. Si el hostname real no
-> coincide con `core1.fis.epn.ec` / `core2.fis.epn.ec`, hay que ajustarlo
-> temporalmente durante la propagación:
-> ```bash
-> sudo hostname core1.fis.epn.ec   # revertir despues con: sudo hostname <original>
-> ```
 
 Prueba de failover: obtener ticket con el primario activo, detenerlo,
 confirmar que el cliente obtiene ticket igualmente (vía el secundario).
@@ -175,9 +161,7 @@ HAProxy en modo TCP (passthrough, no termina TLS), balanceando
 bash scripts/07-balanceador-carga/07.1-balanceador-haproxy.sh
 ```
 
-> VM3 se eligió como balanceador (en vez de VM1) porque VM1 ya usa el
-> puerto 636 localmente para su propio LDAP — evita el conflicto de
-> puerto sin tener que reconfigurar ningún backend.
+
 
 Prueba: `systemctl stop slapd` en VM1, confirmar que las conexiones al
 balanceador siguen respondiendo (ahora solo vía VM2).
@@ -202,22 +186,11 @@ bash scripts/09-monitoreo/09.2-monitoring-prometheus-server.sh # solo VM3
 
 Panel: `http://192.168.100.3:9090/targets`
 
-## Lecciones aprendidas / troubleshooting
-
-- Las VMs partieron con configuraciones previas de otras prácticas
-  (realm Kerberos distinto, bases de datos de LDAP/Kerberos ya
-  existentes). Los scripts asumen un estado limpio; si se reutiliza una
-  VM con historial, puede ser necesario limpiar manualmente
-  `/var/lib/krb5kdc/`, `/var/lib/ldap/`, y `/etc/krb5.conf` antes de
-  correr los scripts de instalación.
-- `set -e` en los scripts de bash puede abortar prematuramente si un
-  comando "esperado a fallar" (como un `ping` de verificación de
-  bloqueo) no maneja explícitamente su código de salida.
 
 ## Créditos y herramientas
 
-Proyecto individual. Scripts de automatización desarrollados con
-asistencia de Claude (Anthropic) para la generación y depuración de
+Proyecto individual.Los Scripts de automatización fuerondesarrollados con
+asistencia de Claude (Anthropic) para la depuración de
 scripts bash y configuración de servicios — todo el trabajo de
 ejecución, verificación y toma de decisiones de arquitectura fue
-realizado y validado directamente en las VMs del autor.
+realizado y validado directamente en las VMs.
