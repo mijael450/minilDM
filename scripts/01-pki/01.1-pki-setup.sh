@@ -1,5 +1,5 @@
 #!/bin/bash
-#02.1-pki-setup-sh
+#01.1-pki-setup.sh
 #Se crea la Autoridad certificadora con el algoritmo del logaritmo discreto para curvas elipticas (ECDSA) para la infraestructura de pkis 
 #Se ejecuta en el servido CA (raiz) 
 

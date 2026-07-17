@@ -1,5 +1,5 @@
 #!/bin/bash
-# 01-setup-hosts.sh
+# 00.1-setup-hosts.sh
 # Configuracion de /etc/hosts y sincronizacion horaria.
 # Se debe ejecutar en las 3 maquinas. 
 set -euo pipefail
@@ -10,7 +10,7 @@ HOSTS_ENTRIES="
 192.168.100.3   client.fis.epn.ec  client
 
 #  balanceador 
-192.168.100.6   ldap.fis.epn.edu.ec
+192.168.100.3   ldap.fis.epn.edu.ec
 "
 
 MARKER_START="# --- FIS-MiniIdM BEGIN ---"

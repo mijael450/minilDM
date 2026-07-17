@@ -4,7 +4,7 @@
 # Ejecutar en(core1) - KDC primario.
 set -e
 
-echo ">> Recomendacion para responder en el menu  interactivo:"
+echo ">> Responder con lo siguiente en el menu interactivo"
 echo "   Default Kerberos version 5 realm:      FIS.EPN.EC"
 echo "   Kerberos servers for your realm:       core1.fis.epn.ec"
 echo "   Administrative server for your realm:  core1.fis.epn.ec"

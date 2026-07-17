@@ -1,5 +1,5 @@
 #!/bin/bash
-# 03-pki-gen-csr.sh
+# 01.2-pki-gen-csr.sh
 # Genera llave privada ECDSA y un CSR  para este servidor.
 # La llave privada generada aqui NUNCA sale de esta maquina.
 #

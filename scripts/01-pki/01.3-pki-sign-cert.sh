@@ -1,5 +1,5 @@
 #!/bin/bash
-# 02.3-pki-sign-cert.sh
+# 01.3-pki-sign-cert.sh
 # Firma un CSR con la CA raiz de la FIS.
 # Ejecutar solo donde se tenga la llave privada de la Autoridad certificadora.
 #

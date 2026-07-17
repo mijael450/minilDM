@@ -1,0 +1,22 @@
+[req]
+default_bits       = 256
+prompt             = no
+distinguished_name = dn
+req_extensions     = req_ext
+ 
+[dn]
+C  = EC
+ST = Pichincha
+L  = Quito
+O  = FIS-EPN
+OU = IdM
+CN = core1.fis.epn.ec
+ 
+[req_ext]
+subjectAltName = @alt_names
+ 
+[alt_names]
+DNS.1 = core1.fis.epn.ec
+DNS.2 = core1
+DNS.3 = ldap.fis.epn.edu.ec
+IP.1  = 192.168.100.6
